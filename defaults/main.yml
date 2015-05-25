@@ -12,3 +12,5 @@ elao_shorewall_config:
   masq:   {}
   zones:  {}
   rules:  {}
+
+elao_shorewall_disable_ipv6: 'Yes'

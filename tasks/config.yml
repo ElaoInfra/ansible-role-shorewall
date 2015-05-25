@@ -8,6 +8,16 @@
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   notify:
     - shorewall restart
+
+# BEWARE! By default, Shorewall allows all IPV6 traffic (open bar).
+# If our system enables IPV6 (most do nowdays), we have to disable it or set up Shorewall6.
+- name: config > Set IPV6 default policy
+  lineinfile :
+    dest:  /etc/shorewall/shorewall.conf
+    regexp: "^DISABLE_IPV6="
+    line: "DISABLE_IPV6={{ elao_shorewall_disable_ipv6 }}"
+  notify:
+    - shorewall restart
     
 - name: config > Writing params file.
   copy:
