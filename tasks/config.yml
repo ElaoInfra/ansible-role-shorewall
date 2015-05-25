@@ -1,5 +1,16 @@
 ---
 
+- name: config > Writing default config file.
+  template:
+    src:   default.j2
+    dest:  /etc/default/shorewall
+    owner: root
+    group: root
+    mode:  0644
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  notify:
+    - shorewall restart
+    
 - name: config > Writing params file.
   copy:
     src:   "{{ item }}"
