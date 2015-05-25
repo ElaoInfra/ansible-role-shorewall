@@ -1,12 +1,10 @@
 ---
 
-- name: config > Writing default config file.
-  template:
-    src:   default.j2
+- name: config > Enable shorewall daemon.
+  lineinfile :
     dest:  /etc/default/shorewall
-    owner: root
-    group: root
-    mode:  0644
+    regexp: "^startup="
+    line: "startup=1"
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
   notify:
     - shorewall restart
